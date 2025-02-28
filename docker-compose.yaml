@@ -3,6 +3,26 @@ networks:
     driver: bridge
 
 services:
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.filename=/etc/traefik/traefik.yaml"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.email=oyogbeche@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - ./letsencrypt:/letsencrypt
+      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
+    networks:
+      - app-network
+      
   auth-api:
     build:
       context: ./auth-api
@@ -78,26 +98,6 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
-    networks:
-      - app-network
-
-  traefik:
-    image: traefik:v2.10
-    command:
-      - "--providers.docker.exposedbydefault=false"
-      - "--providers.file.filename=/etc/traefik/traefik.yaml"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.email=oyogbeche@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - ./letsencrypt:/letsencrypt
-      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
     networks:
       - app-network
 
