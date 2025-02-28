@@ -85,7 +85,7 @@ services:
     image: traefik:v2.10
     command:
       - "--providers.docker.exposedbydefault=false"
-      - "--providers.file.filename=/home/admin/traefik/traefik.yml"
+      - "--providers.file.filename=/etc/traefik/traefik.yaml"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.email=oyogbeche@gmail.com"
@@ -97,7 +97,7 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - ./letsencrypt:/letsencrypt
-      - ./traefik/traefik.yaml:/home/admin/traefik/traefik.yml
+      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
     networks:
       - app-network
 
