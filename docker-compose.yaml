@@ -22,7 +22,7 @@ services:
       - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
     networks:
       - app-network
-      
+
   auth-api:
     build:
       context: ./auth-api
@@ -88,9 +88,10 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`oyogbeche.tech`)"
-      - "traefik.http.routers.frontend.entrypoints=https"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
+      - "traefik.http.services.frontend.loadbalancer.server.port=8000"
     networks:
       - app-network
 
