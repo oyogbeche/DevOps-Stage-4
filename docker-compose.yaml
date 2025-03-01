@@ -35,7 +35,7 @@ services:
       - "8081:8081"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.auth.rule=Host(`oyogbeche.tech`) && PathPrefix(`/api/auth`)"
+      - "traefik.http.routers.auth.rule=Host(`auth.oyogbeche.tech`, `auth-api.oyogbeche.tech`)"
       - "traefik.http.routers.auth.entrypoints=websecure"
       - "traefik.http.routers.auth.tls=true"
       - "traefik.http.routers.auth.tls.certresolver=myresolver"
@@ -71,7 +71,7 @@ services:
       - "8082:8082"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.todos.rule=Host(`oyogbeche.tech`) && PathPrefix(`/api/todos`)"
+      - "traefik.http.routers.todos.rule=Host(`todos.oyogbeche.tech`, `todos-api.oyogbeche.tech`)"
       - "traefik.http.routers.todos.entrypoints=websecure"
       - "traefik.http.routers.todos.tls=true"
       - "traefik.http.routers.todos.service=todos-api"
@@ -92,7 +92,7 @@ services:
       - "8083:8083"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.users.rule=Host(`oyogbeche.tech`) && PathPrefix(`/api/users`)"
+      - "traefik.http.routers.users.rule=Host(`users.oyogbeche.tech`, `users-api.oyogbeche.tech`)"
       - "traefik.http.routers.users.entrypoints=websecure"
       - "traefik.http.routers.users.tls=true"
       - "traefik.http.routers.users.tls.certresolver=myresolver"
@@ -114,6 +114,7 @@ services:
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=myresolver"
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
+      - "traefik.http.routers.frontend.priority=5"
     networks:
       - app-network
 
