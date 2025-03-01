@@ -20,7 +20,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
-      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
+      - /etc/traefik/traefik.yaml:/etc/traefik/traefik.yaml
     networks:
       - app-network
 
@@ -123,5 +123,4 @@ services:
       - app-network
 
 volumes:
-  letsencrypt:  
-
+  letsencrypt:
