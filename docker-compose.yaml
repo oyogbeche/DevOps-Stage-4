@@ -14,8 +14,6 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=oyogbeche@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-    expose:
-      - "8000"
     ports:
       - "80:80"
       - "443:443"
@@ -83,8 +81,6 @@ services:
   frontend:
     build:
       context: ./frontend
-    ports:
-      - "8000:80"
     depends_on:
       - auth-api
       - todos-api
@@ -94,7 +90,7 @@ services:
       - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
-      - "traefik.http.services.frontend.loadbalancer.server.port=8000"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
     networks:
       - app-network
 
