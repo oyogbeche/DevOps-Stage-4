@@ -39,7 +39,7 @@ services:
       - "traefik.http.routers.auth.entrypoints=websecure"
       - "traefik.http.routers.auth.tls=true"
       - "traefik.http.routers.auth.tls.certresolver=myresolver"
-      - "traefik.http.services.auth.loadbalancer.server.port=8081"
+      - "traefik.http.services.auth-api.loadbalancer.server.port=8081"
     depends_on:
       - users-api
     networks:
@@ -73,8 +73,8 @@ services:
       - "traefik.http.routers.auth.rule=Host(`oyogbeche.tech`) && PathPrefix(`/api/todos`)"
       - "traefik.http.routers.auth.entrypoints=websecure"
       - "traefik.http.routers.auth.tls=true"
-      - "traefik.http.routers.auth.tls.certresolver=myresolver"
-      - "traefik.http.services.auth.loadbalancer.server.port=8082"
+      
+      - "traefik.http.services.todos-api.loadbalancer.server.port=8082"
     depends_on:
       - redis
       - log-message-processor
@@ -95,7 +95,7 @@ services:
       - "traefik.http.routers.auth.entrypoints=websecure"
       - "traefik.http.routers.auth.tls=true"
       - "traefik.http.routers.auth.tls.certresolver=myresolver"
-      - "traefik.http.services.auth.loadbalancer.server.port=8083"
+      - "traefik.http.services.users-api.loadbalancer.server.port=8083"
     networks:
       - app-network
 
